@@ -12,7 +12,7 @@ Como editar o codigo do Github no local:
 
 para baixar as atualizações feitas no arquivo. FAZER ISSO TODA VEZ ANTES DE ALTERAR O CÓDIGO!
 
-=================================================================================================
+=========================================================
 OBS: Para transitar entre os diretórios usar os comandos:
 
 dir => para ver todos os arquivos dentro do diretório.
@@ -20,7 +20,8 @@ dir => para ver todos os arquivos dentro do diretório.
 cd [nome do arquivo desejado] =>Para ir para um arquivo. Exemplo: cd Documents
 
 cd .. =>Para voltar ao arquivo anterior.
-================================================================================================
+
+=========================================================
 
 -> Com as alterações feitas e preciso enviar o arquivo para o Github. Para isso, deve seguir os comando abaixo:
 
