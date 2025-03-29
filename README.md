@@ -6,7 +6,13 @@ Como editar o codigo do Github no local:
 
 ->Para abrir o prompt de comando aperte o botão "windows" (o que tem o icone de janelinha no teclado '-') e digitar "cmd" na aba de busca.
 
--> Em seguida, é necessario localizar a pasta que deseja baixar o arquivo (EX: C:Users\joao\documents) e digitar:
+->Em seguida é preciso clonar o repositório no computador usando o comando:
+
+  git clone [url do repositório] =>nesse caso: git clone https://github.com/JPKbral/projeto-de-robos
+
+FAZER ISSO APENAS UMA VEZ. MAIS QUE ISSO É REDUNDÂNCIA.
+
+-> Depois, é necessario localizar a pasta que deseja baixar o arquivo (EX: C:Users\joao\documents) e digitar:
 
   git pull  =>Atualiza todas as possíveis atualizações que os membros possam ter feito para sua pasta
 
