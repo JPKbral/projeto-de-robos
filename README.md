@@ -13,6 +13,7 @@ Como editar o codigo do Github no local:
 para baixar as atualizações feitas no arquivo. FAZER ISSO TODA VEZ ANTES DE ALTERAR O CÓDIGO!
 
 =========================================================
+
 OBS: Para transitar entre os diretórios usar os comandos:
 
 dir => para ver todos os arquivos dentro do diretório.
