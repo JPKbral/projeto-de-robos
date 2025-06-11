@@ -1,8 +1,10 @@
-// A ideia do nome foi da Manu.
-
 #include <AFMotor.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
 #include <Wire.h>
-#include <MPU6050.h>
+
+//MPU6050
+Adafruit_MPU6050 mpu;
 
 // Motores
 AF_DCMotor motor1(1);
@@ -10,47 +12,90 @@ AF_DCMotor motor2(2);
 AF_DCMotor motor3(3);
 AF_DCMotor motor4(4);
 
-// IMU
-MPU6050 imu;
-
-// Variáveis
-float gyroZ;
-float angleZ = 0;
-float gyroZ_offset = 0;
-unsigned long lastTime;
-
-void calibrarGiroscopio() {
-  Serial.println("Calibrando giroscópio...");
-  long soma = 0;
-  int numLeituras = 1000;
-
-  for (int i = 0; i < numLeituras; i++) {
-    int16_t gz;
-    imu.getRotation(NULL, NULL, &gz);
-    soma += gz;
-    delay(2); // tempo para estabilidade entre as leituras
-  }
-
-  gyroZ_offset = soma / (float)numLeituras;
-  Serial.print("Offset do giroscópio Z: ");
-  Serial.println(gyroZ_offset);
-}
-
 void setup() {
-  Serial.begin(9600);
-  Wire.begin();
-  imu.initialize();
 
-  if (!imu.testConnection()) {
-    Serial.println("Erro ao conectar ao IMU");
-    while (1);
+  Serial.begin(9600);
+  
+  while (!Serial)
+    delay(10); // will pause Zero, Leonardo, etc until serial console opens
+
+  Serial.println("Adafruit MPU6050 test!");
+
+  // Try to initialize!
+  if (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip");
+    while (1) {
+      delay(10);
+    }
+  }
+  Serial.println("MPU6050 Found!");
+
+  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+  Serial.print("Accelerometer range set to: ");
+  switch (mpu.getAccelerometerRange()) {
+  case MPU6050_RANGE_2_G:
+    Serial.println("+-2G");
+    break;
+  case MPU6050_RANGE_4_G:
+    Serial.println("+-4G");
+    break;
+  case MPU6050_RANGE_8_G:
+    Serial.println("+-8G");
+    break;
+  case MPU6050_RANGE_16_G:
+    Serial.println("+-16G");
+    break;
+  }
+  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+  Serial.print("Gyro range set to: ");
+  switch (mpu.getGyroRange()) {
+  case MPU6050_RANGE_250_DEG:
+    Serial.println("+- 250 deg/s");
+    break;
+  case MPU6050_RANGE_500_DEG:
+    Serial.println("+- 500 deg/s");
+    break;
+  case MPU6050_RANGE_1000_DEG:
+    Serial.println("+- 1000 deg/s");
+    break;
+  case MPU6050_RANGE_2000_DEG:
+    Serial.println("+- 2000 deg/s");
+    break;
   }
 
-  delay(1000); // estabilização inicial do sensor
-  calibrarGiroscopio(); // realiza calibração parado
+  mpu.setFilterBandwidth(MPU6050_BAND_5_HZ);
+  Serial.print("Filter bandwidth set to: ");
+  switch (mpu.getFilterBandwidth()) {
+  case MPU6050_BAND_260_HZ:
+    Serial.println("260 Hz");
+    break;
+  case MPU6050_BAND_184_HZ:
+    Serial.println("184 Hz");
+    break;
+  case MPU6050_BAND_94_HZ:
+    Serial.println("94 Hz");
+    break;
+  case MPU6050_BAND_44_HZ:
+    Serial.println("44 Hz");
+    break;
+  case MPU6050_BAND_21_HZ:
+    Serial.println("21 Hz");
+    break;
+  case MPU6050_BAND_10_HZ:
+    Serial.println("10 Hz");
+    break;
+  case MPU6050_BAND_5_HZ:
+    Serial.println("5 Hz");
+    break;
+  }
 
-  lastTime = millis();
+  Serial.println("");
+  delay(100);
+
+
   int velocidade = 200;
+  
+
 
   // Anda para frente
   motor1.setSpeed(velocidade);
@@ -61,41 +106,57 @@ void setup() {
   motor2.run(FORWARD);
   motor3.run(FORWARD);
   motor4.run(FORWARD);
-  delay(10000);
+  delay(5310);
 
   // Para
   motor1.setSpeed(0);
   motor2.setSpeed(0);
   motor3.setSpeed(0);
   motor4.setSpeed(0);
-  delay(500);
+  delay(1000);
 
-  // Gira 90 graus à direita usando giroscópio calibrado
-  angleZ = 0;
-  lastTime = millis();
+  // gira para a direita
+  // motor1.setSpeed(velocidade);
+  // motor2.setSpeed(velocidade);
+  // motor3.setSpeed(velocidade);
+  // motor4.setSpeed(velocidade);
+  // motor1.run(FORWARD);
+  // motor2.run(BACKWARD);
+  // motor3.run(FORWARD);
+  // motor4.run(BACKWARD);
+  // delay(1000);
+
+  //gira para a esquerda
 
   motor1.setSpeed(velocidade);
   motor2.setSpeed(velocidade);
   motor3.setSpeed(velocidade);
   motor4.setSpeed(velocidade);
-  motor1.run(FORWARD);
-  motor2.run(BACKWARD);
+  motor1.run(BACKWARD);
+  motor2.run(FORWARD);
   motor3.run(BACKWARD);
   motor4.run(FORWARD);
+  delay(1300);
+ //1m = 2950
 
-  while (abs(angleZ) < 90) {
-    unsigned long currentTime = millis();
-    float deltaTime = (currentTime - lastTime) / 1000.0;
-    lastTime = currentTime;
+  // Anda para frente 36 cm
+  motor1.setSpeed(velocidade);
+  motor2.setSpeed(velocidade);
+  motor3.setSpeed(velocidade);
+  motor4.setSpeed(velocidade);
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);
+  delay(1062);
 
-    imu.getRotation(NULL, NULL, &gyroZ);
-    float z = (gyroZ - gyroZ_offset) / 131.0;
-
-    angleZ += z * deltaTime;
-    Serial.print("Ângulo Z: ");
-    Serial.println(angleZ);
-  }
-
+  // Para
+  motor1.setSpeed(0);
+  motor2.setSpeed(0);
+  motor3.setSpeed(0);
+  motor4.setSpeed(0);
+  delay(1000);
+  
   // Para os motores
   motor1.run(RELEASE);
   motor2.run(RELEASE);
@@ -104,5 +165,15 @@ void setup() {
 }
 
 void loop() {
-  // vazio
+  /* Get new sensor events with the readings */
+  sensors_event_t a, g, temp;
+  mpu.getEvent(&a, &g, &temp);
+
+  /* Print out the values */
+
+  Serial.print("Rotation X: ");
+  Serial.print(g.gyro.x);
+
+  Serial.println("");
+  delay(1000);
 }
