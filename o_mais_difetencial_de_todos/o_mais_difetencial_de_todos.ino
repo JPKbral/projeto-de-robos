@@ -170,12 +170,12 @@ void abaixar_garra() {
 void acionar_dispenser() {
   for (int pos = 0; pos <= 180; pos++) {
     meuServoC.write(pos);
-    delay(15);
+    delay(10);
   }
   delay(1000);
   for (int pos = 180; pos >= 0; pos--) {
     meuServoC.write(pos);
-    delay(15);
+    delay(10);
   }
   delay(1000);
   meuServoC.write(90);
@@ -275,13 +275,14 @@ void executarSequencia() {
   abaixar_garra();
   AndaParaFrente(velocidade);
   acionar_dispenser();
-  delay(2000);
+  delay(10);
   pararMotores();
   delay(1000);
   subir_garra();
 
   // Giro esquerda 90°
-  Giro_Esq(velocidade, 90);
+  Giro_Esq(velocidade, 80);
+  pararMotores();
   delay(1000);
 
   // Anda 36 cm
@@ -290,32 +291,33 @@ void executarSequencia() {
   pararMotores();
   delay(1000);
 
-  // Giro esquerda -90°
-  Giro_Esq(velocidade, -90);
+  // Giro esquerda 90°
+  Giro_Esq(velocidade, 75);
+  pararMotores();
   delay(1000);
 
   // Sequência 2
   abaixar_garra();
   AndaParaFrente(velocidade);
   acionar_dispenser();
-  delay(5310);
+  delay(10);
   pararMotores();
-  delay(2000);
+  delay(1000);
   subir_garra();
 
   // Giro direita 90°
-  Giro_Dir(velocidade, 90);
+  Giro_Dir(velocidade, 85);
+  pararMotores();
   delay(1000);
 
   // Anda 36 cm
   AndaParaFrente(velocidade);
   delay(1062);
   pararMotores();
-  delay(2000);
+  delay(1000);
 
   // Giro direita 90°
-  Giro_Dir(velocidade, 90);
-  delay(2000);
+  Giro_Dir(velocidade, 80);
 
   pararMotores();
   motor1.run(RELEASE);
