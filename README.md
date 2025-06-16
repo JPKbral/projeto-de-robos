@@ -1,5 +1,7 @@
 # projeto-de-robos
-
+====================================================================================================================================
+Link para o video do projeto: 
+====================================================================================================================================
 Como editar o codigo do Github no local:
 
 -> Primeiramente é necessario instalar o Git no computador. o link a seguir tem um tutorial para realizar a instalação <https://youtu.be/RLx63VZ9wSc?si=hRf4jisMQY7hcKDg>.
